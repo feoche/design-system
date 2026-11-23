@@ -92,8 +92,9 @@
   /* Borders - statuses */
   --ods-semantic-color-border-brand: var(--ods-palette-brand-100);
 
-  /* Minor brand button at rest: the brand step, not the control border. */
-  --ods-semantic-color-border-brand-minor: var(--ods-palette-brand-500);
+  /* Minor brand button at rest: the brand step, not the control border. brand-500 is gray-800, ~1.47:1 on the
+     slate-900 page, so the border lifts to brand-300 as the minor ink does. */
+  --ods-semantic-color-border-brand-minor: var(--ods-palette-brand-300);
   --ods-semantic-color-border-accent-subtle: var(--ods-palette-accent-500);
   --ods-semantic-color-border-accent: var(--ods-palette-accent-200); /* the selected Tile, one step past the field hover */
   --ods-semantic-color-border-information-subtle: var(--ods-palette-blue-500);

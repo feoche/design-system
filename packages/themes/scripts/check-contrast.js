@@ -36,6 +36,7 @@ const CONTRAST_PAIRS = [
   { fg: 'border-control', bg: 'surface-control', min: 3 },
   { fg: 'surface-brand', bg: 'surface-page', min: 3 },
   { fg: 'surface-control-solid', bg: 'surface-page', min: 3 },
+  { fg: 'border-brand-minor', bg: 'surface-page', min: 3 },
   // Not a WCAG rule: checks that the hover colour stays visible against the brand surface.
   { fg: 'interaction-brand-hover', bg: 'surface-brand', min: 1.2 },
   // `focus` is the token `--ods-semantic-color-focus`, not a surface.
