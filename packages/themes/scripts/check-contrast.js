@@ -4,10 +4,11 @@
  * Checks the WCAG contrast ratio of the semantic colour pairs a theme relies on, from the `root`
  * object of a generated tokens.json. A pair whose colours are not both 3- or 6-digit hex literals
  * (a missing token, an alpha channel, a colour function) is reported as SKIP rather than as a
- * failure, so the check never passes or fails on a value it cannot compute.
+ * failure, so the check never passes or fails on a value it cannot compute. A token key missing from
+ * `root` is a MISSING pair and fails the check, so a renamed token cannot pass silently.
  *
  * Each pair is printed as `OK|KO <ratio> <fg> on <bg> (min <n>)`. Names are written without the
- * `--ods-semantic-color-` prefix. The exit code is 1 if any pair is KO.
+ * `--ods-semantic-color-` prefix. The exit code is 1 if any pair is KO or MISSING.
  *
  * Usage: node scripts/check-contrast.js <tokens.json> [...]
  */
@@ -81,10 +82,18 @@ function checkFile(file) {
   let failed = false;
 
   for (const { fg, bg, min } of CONTRAST_PAIRS) {
-    const fgValue = root[`${PREFIX}${fg}`];
-    const bgValue = root[`${PREFIX}${bg}`];
-    const fgRgb = toRgb(fgValue);
-    const bgRgb = toRgb(bgValue);
+    const fgKey = `${PREFIX}${fg}`;
+    const bgKey = `${PREFIX}${bg}`;
+    const missingKeys = [fgKey, bgKey].filter((key) => !(key in root));
+
+    if (missingKeys.length > 0) {
+      console.log(`MISSING ${fg} on ${bg} (${missingKeys.join(', ')} not in root)`);
+      failed = true;
+      continue;
+    }
+
+    const fgRgb = toRgb(root[fgKey]);
+    const bgRgb = toRgb(root[bgKey]);
 
     if (!fgRgb || !bgRgb) {
       console.log(`SKIP ${fg} on ${bg} (min ${min})`);
