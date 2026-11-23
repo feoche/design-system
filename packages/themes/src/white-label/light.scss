@@ -105,7 +105,8 @@
   --ods-semantic-color-content-on-selected: var(--ods-palette-accent-700);
   --ods-semantic-color-content-on-neutral: var(--ods-palette-gray-600);
   --ods-semantic-color-content-on-brand: var(--ods-palette-accent-800);
-  --ods-semantic-color-content-on-accent: var(--ods-palette-accent-500);
+  // accent-500 is 4.04:1 on accent-100 (the tinted accent surface): the ink takes accent-600.
+  --ods-semantic-color-content-on-accent: var(--ods-palette-accent-600);
   --ods-semantic-color-content-on-information: var(--ods-palette-blue-500);
   --ods-semantic-color-content-on-success: var(--ods-palette-green-700);
   --ods-semantic-color-content-on-warning: var(--ods-palette-orange-700);
