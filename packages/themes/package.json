@@ -58,6 +58,14 @@
     },
     "./white-label/tokens": {
       "default": "./dist/white-label/light.tokens.json"
+    },
+    "./white-label-dark/css": {
+      "types": "./src/stylesheet.d.ts",
+      "sass": "./src/white-label/dark.scss",
+      "default": "./dist/white-label/dark.css"
+    },
+    "./white-label-dark/tokens": {
+      "default": "./dist/white-label/dark.tokens.json"
     }
   },
   "files": [
