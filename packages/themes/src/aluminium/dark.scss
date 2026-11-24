@@ -68,10 +68,21 @@
   /* Focus */
   --ods-semantic-color-focus: var(--ods-palette-white);
 
+  /* Content - status inks on the page */
+  // Keeps red-300, the critical ink before the white label moved it to red-200 for the hovered row.
+  --ods-semantic-color-content-critical: var(--ods-palette-red-300);
+
   /* Brand */
   --ods-semantic-color-surface-brand: var(--ods-palette-brand-500);
   --ods-semantic-color-content-on-brand-solid: var(--ods-palette-white);
   --ods-semantic-color-border-brand: var(--ods-palette-brand-500);
   --ods-semantic-color-interaction-brand-hover: var(--ods-palette-brand-600);
   --ods-semantic-color-interaction-brand-active: var(--ods-palette-brand-600);
+}
+
+@layer ods-organisms {
+  // The error ink of a hovered row: the white label gives red-200 (5.55:1 on interaction-highlight).
+  :root [data-ods='file-upload'] {
+    --ods-file-upload-item-text-color-critical-hover: var(--ods-palette-red-200);
+  }
 }
