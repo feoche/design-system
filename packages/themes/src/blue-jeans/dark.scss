@@ -2,11 +2,11 @@
 @use '../white-label/dark';
 @use './shared';
 
-/* Surfaces, structure and selection follow aluminium dark on navy; brand and accent stay blue, so the
-   selected Tile outline (border-accent) is blue. Status roles keep the blue-jeans ramps: pale fill 900, as
-   their v19 ramps stop where aluminium's 800 sits (information 800, neutral gray-900), ink on the pale fill
-   200, pale border 600 (information 500); Badge and Message keep the blue-jeans borderless tinted fill in
-   high. */
+/* Surfaces, structure and selection follow aluminium dark on navy: the accent ramp is navy, while the brand
+   ramp stays blue, so the selected Tile outline (border-accent) is blue. Status roles keep the blue-jeans
+   ramps: pale fill 900, as their v19 ramps stop where aluminium's 800 sits (information 800, neutral gray-900),
+   ink on the pale fill 200, pale border 600 (information 500); Badge and Message keep the blue-jeans borderless
+   tinted fill in high. */
 :root {
   /* Palette - accent */
   // The accent ramp aims at navy for the roles that read it; the accent status roles alias information.
@@ -20,6 +20,10 @@
   --ods-palette-accent-700: var(--ods-palette-navy-700);
   --ods-palette-accent-800: var(--ods-palette-navy-800);
   --ods-palette-accent-900: var(--ods-palette-navy-900);
+
+  // Navy references: the surface, border and track tokens below that name a navy step resolve the same as the
+  // white label's accent step, since the dark accent ramp is navy. They are kept so the published tokens.json
+  // keeps its navy references.
 
   /* Surfaces - canvas and layers */
   --ods-semantic-color-surface-page: var(--ods-palette-navy-900);
