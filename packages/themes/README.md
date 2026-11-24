@@ -60,7 +60,7 @@ To see where each theme differs from the white label of its mode, run `pnpm --fi
 
 A theme is a folder `src/<name>/` plus its exports. To create `<name>` on the white label:
 
-1. Create `src/<name>/_shared.scss`, `light.scss` and `dark.scss`. Each mode file starts with `@use ../white-label/light;` (or `dark`) and `@use ./shared;`, then holds only its deltas. Add `_palette.scss` or `_variables.scss` only for palette values that differ from the white label, as Aluminium and Blue Jeans do.
+1. Create `src/<name>/_shared.scss`, `light.scss` and `dark.scss`. Each mode file starts with `@use ../white-label/light;` (or `dark`) and `@use ./shared;`, then holds only its deltas. Add `_palette.scss` or `_variables.scss` only for palette values that differ from the white label. Blue Jeans has a `_palette.scss` for its own ramps; Aluminium has no `_palette.scss` and keeps a full `_variables.scss` only as a public Sass path.
 2. Add the exports to `package.json`: `./<name>/css` and `./<name>/tokens` for light, `./<name>-dark/css` and `./<name>-dark/tokens` for dark. `scripts/themes.js` discovers themes only from these exports, and `tokens:diff` reads the `-dark` suffix to pick the white label of the mode.
 3. Run `pnpm --filter @ovhcloud/ods-themes run build:prod`. `tokens:diff` and `check:contrast` read the `dist/*.tokens.json` files, so run them after the build.
 4. Run `pnpm --filter @ovhcloud/ods-themes run tokens:diff` to review every value that differs from the white label, and `node scripts/check-contrast.js dist/<name>/light.tokens.json dist/<name>/dark.tokens.json` (or `pnpm check:contrast` with the same files) to check the contrast of the pairs.
