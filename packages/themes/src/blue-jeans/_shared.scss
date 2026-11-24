@@ -42,7 +42,7 @@
 
 /* Components */
 @layer ods-atoms {
-  // Same as in ods-quarks above.
+  // The avatar sits on the brand surface, so its text takes the ink that is legible on brand-solid.
   :root [data-ods='avatar'] {
     --ods-avatar-background-color: var(--ods-semantic-color-surface-brand);
     --ods-avatar-text-color: var(--ods-semantic-color-content-on-brand-solid);
