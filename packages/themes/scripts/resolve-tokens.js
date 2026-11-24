@@ -210,4 +210,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { CYCLE, DANGLING, resolveValue };
+module.exports = { CYCLE, DANGLING, collect, resolveScopes, resolveValue };
