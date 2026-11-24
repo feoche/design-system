@@ -34,6 +34,7 @@
   --ods-semantic-color-surface-success-subtle: var(--ods-palette-green-50);
 
   /* Surfaces - form controls */
+  // Kept so the published tokens.json keeps its accent alias; resolves the same as the white label's brand-500, as both ramps are blue.
   --ods-semantic-color-surface-control-solid: var(--ods-palette-accent-500);
   --ods-semantic-color-surface-segmented: var(--ods-palette-gray-100);
 
@@ -112,4 +113,13 @@
   /* Shadow */
   --ods-semantic-color-shadow-overlay: var(--ods-palette-blue-700);
   --ods-semantic-shadow-overlay: 0 2px 8px color-mix(in srgb, var(--ods-semantic-color-shadow-overlay) 20%, transparent);
+}
+
+/* Components */
+@layer ods-quarks {
+  // :root outranks the component's own class in this layer whatever the load order; an app rule outside the layers still wins.
+  :root [data-ods='skeleton'] {
+    // surface-pending and surface-muted are both gray-100 here: the shimmer takes the next rung, as in 19.7.3.
+    --ods-skeleton-transition-background-color: var(--ods-semantic-color-surface-neutral-subtle);
+  }
 }
