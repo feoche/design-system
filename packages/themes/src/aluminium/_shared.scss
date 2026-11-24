@@ -1,0 +1,26 @@
+// Aluminium's brand and accent ramps, in both modes: blue and navy, where the white label has gray and slate.
+:root {
+  /* Palette - brand */
+  --ods-palette-brand-50: var(--ods-palette-blue-50);
+  --ods-palette-brand-100: var(--ods-palette-blue-100);
+  --ods-palette-brand-200: var(--ods-palette-blue-200);
+  --ods-palette-brand-300: var(--ods-palette-blue-300);
+  --ods-palette-brand-400: var(--ods-palette-blue-400);
+  --ods-palette-brand-500: var(--ods-palette-blue-500);
+  --ods-palette-brand-600: var(--ods-palette-blue-600);
+  --ods-palette-brand-700: var(--ods-palette-blue-700);
+  --ods-palette-brand-800: var(--ods-palette-blue-800);
+  --ods-palette-brand-900: var(--ods-palette-blue-900);
+
+  /* Palette - accent */
+  --ods-palette-accent-50: var(--ods-palette-navy-50);
+  --ods-palette-accent-100: var(--ods-palette-navy-100);
+  --ods-palette-accent-200: var(--ods-palette-navy-200);
+  --ods-palette-accent-300: var(--ods-palette-navy-300);
+  --ods-palette-accent-400: var(--ods-palette-navy-400);
+  --ods-palette-accent-500: var(--ods-palette-navy-500);
+  --ods-palette-accent-600: var(--ods-palette-navy-600);
+  --ods-palette-accent-700: var(--ods-palette-navy-700);
+  --ods-palette-accent-800: var(--ods-palette-navy-800);
+  --ods-palette-accent-900: var(--ods-palette-navy-900);
+}
