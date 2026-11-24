@@ -131,7 +131,8 @@
   /* Interaction - lists and selection */
   // Accent 700, not 600: on 600 the error inks of a hovered row fall below 4.5:1 (red-200 4.06:1).
   --ods-semantic-color-interaction-highlight: var(--ods-palette-accent-700);
-  --ods-semantic-color-interaction-selected-highlight: var(--ods-palette-accent-500);
+  // Accent 600, not 500: content-text on the selected option gives 4.04:1 on 500, 6.44:1 on 600, still lighter than the hover.
+  --ods-semantic-color-interaction-selected-highlight: var(--ods-palette-accent-600);
 
   /* Interaction - form controls */
   --ods-semantic-color-interaction-control-hover: var(--ods-palette-accent-300);
