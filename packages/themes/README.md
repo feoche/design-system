@@ -40,7 +40,7 @@ Aluminium (`src/aluminium`) and Blue Jeans (`src/blue-jeans`) are built on it. A
 - `light.scss` uses `../white-label/light`, then `_shared.scss`, then its own light deltas.
 - `dark.scss` uses `../white-label/dark`, then `_shared.scss`, then its own dark deltas.
 
-`_shared.scss` holds what both modes of a theme share: its brand and accent ramps and its component tokens. To change a value of a theme for one mode, edit that mode's file; to change it for both, edit `_shared.scss`; to change it for every theme, edit the white label.
+`_shared.scss` holds the palette re-aims and the deltas that are identical in light and dark. A mode-specific value belongs in that mode's file, since a theme may set the same ramp differently per mode. To change a value of a theme for one mode, edit that mode's file; to change it for both, edit `_shared.scss`; to change it for every theme, edit the white label.
 
 Dark deltas sit on top of `white-label/dark`, so they also inherit its dark values. To drop a white-label dark value that a theme does not want, re-declare the value the theme wants in its `dark.scss`.
 
@@ -50,11 +50,20 @@ Before a change that should not alter any build, save the current build, change 
 
 1. Save the build of the current branch: `pnpm --filter @ovhcloud/ods-themes run build:prod`, then copy `packages/themes/dist` to a directory outside the repository.
 2. Change the sources and rebuild with `pnpm --filter @ovhcloud/ods-themes run build:prod`.
-3. Run `pnpm --filter @ovhcloud/ods-themes run compare:builds <saved-dist-dir>`. It prints every token that changed, went missing or was added, and exits 1 on any change that is not allowed. A refactor should print nothing.
+3. Run `pnpm --filter @ovhcloud/ods-themes run compare:builds <saved-dist-dir>`. It prints every token that changed, went missing or was added, and exits 1 on any change that is not allowed. Lines marked `added` are allowed and do not fail: the new ODS palette slate tokens in the root scope, and new `white-label/` files. The exit code is the gate, so a refactor should exit 0.
 
 To see where each theme differs from the white label of its mode, run `pnpm --filter @ovhcloud/ods-themes run tokens:diff`. It prints each differing token as `<theme> <token>: <white-label value> → <theme value>`, grouped by theme with a count per theme. It is a report and always exits 0.
 
 `pnpm build:prod` compiles each mode to a single stylesheet (`dist/<theme>/<mode>.css`, the two modes merged into one `:root` by `scripts/bake-themes.js`) and regenerates its `<mode>.tokens.json`. `pnpm tokens:resolve` prints what each token resolves to.
+
+## How to create a theme
+
+A theme is a folder `src/<name>/` plus its exports. To create `<name>` on the white label:
+
+1. Create `src/<name>/_shared.scss`, `light.scss` and `dark.scss`. Each mode file starts with `@use ../white-label/light;` (or `dark`) and `@use ./shared;`, then holds only its deltas. Add `_palette.scss` or `_variables.scss` only for palette values that differ from the white label, as Aluminium and Blue Jeans do.
+2. Add the exports to `package.json`: `./<name>/css` and `./<name>/tokens` for light, `./<name>-dark/css` and `./<name>-dark/tokens` for dark. `scripts/themes.js` discovers themes only from these exports, and `tokens:diff` reads the `-dark` suffix to pick the white label of the mode.
+3. Run `pnpm --filter @ovhcloud/ods-themes run build:prod`. `tokens:diff` and `check:contrast` read the `dist/*.tokens.json` files, so run them after the build.
+4. Run `pnpm --filter @ovhcloud/ods-themes run tokens:diff` to review every value that differs from the white label, and `node scripts/check-contrast.js dist/<name>/light.tokens.json dist/<name>/dark.tokens.json` (or `pnpm check:contrast` with the same files) to check the contrast of the pairs.
 
 ## The white label theme
 
