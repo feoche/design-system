@@ -93,6 +93,10 @@
   --ods-semantic-color-interaction-brand-active: var(--ods-palette-brand-600);
   --ods-semantic-color-interaction-warning-active: var(--ods-palette-orange-500);
 
+  /* Interaction - lists and selection */
+  // Keeps the theme's own row highlight; the white label uses accent-700.
+  --ods-semantic-color-interaction-highlight: var(--ods-palette-accent-600);
+
   /* Interaction - form controls */
   --ods-semantic-color-interaction-control-solid-hover: var(--ods-palette-accent-200);
   --ods-semantic-color-interaction-control-solid-active: var(--ods-palette-accent-200);
