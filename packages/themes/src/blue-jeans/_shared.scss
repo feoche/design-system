@@ -1,0 +1,86 @@
+// Blue Jeans' palette and the tokens it keeps in both modes: the brand ramp, the roles that alias a
+// blue-jeans family, and the component tokens. The accent ramp is set per mode in light.scss and
+// dark.scss; red, green, orange and twilight are in _palette.scss.
+@use './palette';
+
+:root {
+  /* Palette - brand */
+  --ods-palette-brand-50: var(--ods-palette-blue-50);
+  --ods-palette-brand-100: var(--ods-palette-blue-100);
+  --ods-palette-brand-200: var(--ods-palette-blue-200);
+  --ods-palette-brand-300: var(--ods-palette-blue-300);
+  --ods-palette-brand-400: var(--ods-palette-blue-400);
+  --ods-palette-brand-500: var(--ods-palette-blue-500);
+  --ods-palette-brand-600: var(--ods-palette-blue-600);
+  --ods-palette-brand-700: var(--ods-palette-blue-700);
+  --ods-palette-brand-800: var(--ods-palette-blue-800);
+  --ods-palette-brand-900: var(--ods-palette-blue-900);
+
+  /* Surfaces - statuses */
+  --ods-semantic-color-surface-accent-subtle: var(--ods-semantic-color-surface-information-subtle);
+  --ods-semantic-color-surface-warning: var(--ods-palette-orange-400);
+
+  /* Content - inks on a tinted surface */
+  --ods-semantic-color-content-on-accent: var(--ods-semantic-color-content-on-information);
+
+  /* Content - inks on a solid surface */
+  --ods-semantic-color-content-on-warning-solid: var(--ods-palette-orange-900);
+
+  /* Borders - statuses */
+  --ods-semantic-color-border-accent-subtle: var(--ods-semantic-color-border-information-subtle);
+
+  /* Minor brand button at rest: the brand step, not the control border. */
+  --ods-semantic-color-border-brand-minor: var(--ods-palette-brand-500);
+
+  /* Interaction - on a tinted / transparent surface */
+  --ods-semantic-color-interaction-accent-subtle-hover: var(--ods-semantic-color-interaction-information-subtle-hover);
+  --ods-semantic-color-interaction-accent-subtle-active: var(--ods-semantic-color-interaction-information-subtle-active);
+
+  /* Interaction - on a solid surface */
+  --ods-semantic-color-interaction-warning-hover: var(--ods-palette-orange-500);
+}
+
+/* Components */
+@layer ods-quarks {
+  // :root outranks the component's own class in this layer whatever the load order; an app rule outside the layers still wins.
+  :root [data-ods='skeleton'] {
+    // surface-pending and surface-muted are both gray-100 here: the shimmer takes the next rung, as in 19.7.3.
+    --ods-skeleton-transition-background-color: var(--ods-semantic-color-surface-neutral-subtle);
+  }
+}
+
+@layer ods-atoms {
+  // Same as in ods-quarks above.
+  :root [data-ods='avatar'] {
+    --ods-avatar-background-color: var(--ods-semantic-color-surface-brand);
+    --ods-avatar-text-color: var(--ods-semantic-color-content-on-brand-solid);
+  }
+
+  :root [data-ods='badge'] {
+    --ods-badge-border-radius: 4px;
+    // The v19 widths, border included: the 4px corners need less side room than the pill.
+    --ods-badge-padding-horizontal-sm: calc(var(--ods-semantic-size-space-inset-inline) / 2 - var(--ods-semantic-border-thickness));
+    --ods-badge-padding-horizontal-md: calc(var(--ods-semantic-size-space-inset-inline) / 2 - var(--ods-semantic-border-thickness));
+    --ods-badge-padding-horizontal-lg: calc(var(--ods-semantic-size-space-inset-inline) * 0.75 - var(--ods-semantic-border-thickness));
+    // high is the v19 tinted fill without a border.
+    --ods-badge-border-color-accent-high: transparent;
+    --ods-badge-border-color-critical-high: transparent;
+    --ods-badge-border-color-information-high: transparent;
+    --ods-badge-border-color-neutral-high: transparent;
+    --ods-badge-border-color-success-high: transparent;
+    --ods-badge-border-color-warning-high: transparent;
+  }
+}
+
+@layer ods-molecules {
+  // Same as in ods-atoms above.
+  :root [data-ods='message'] {
+    // high is the v19 tinted fill without a border.
+    --ods-message-border-color-accent-high: transparent;
+    --ods-message-border-color-critical-high: transparent;
+    --ods-message-border-color-information-high: transparent;
+    --ods-message-border-color-neutral-high: transparent;
+    --ods-message-border-color-success-high: transparent;
+    --ods-message-border-color-warning-high: transparent;
+  }
+}
