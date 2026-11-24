@@ -129,7 +129,8 @@
   --ods-semantic-color-interaction-brand-visited: var(--ods-palette-brand-200);
 
   /* Interaction - lists and selection */
-  --ods-semantic-color-interaction-highlight: var(--ods-palette-accent-600);
+  // Accent 700, not 600: on 600 the error inks of a hovered row fall below 4.5:1 (red-200 4.06:1).
+  --ods-semantic-color-interaction-highlight: var(--ods-palette-accent-700);
   --ods-semantic-color-interaction-selected-highlight: var(--ods-palette-accent-500);
 
   /* Interaction - form controls */
@@ -196,7 +197,7 @@
 @layer ods-organisms {
   // Same as in ods-atoms above.
   :root [data-ods='file-upload'] {
-    // The error ink of a hovered row: content-critical gives 4.34:1 on interaction-highlight, red-200 5.83:1.
+    // The error ink of a hovered row: content-critical gives 4.13:1 on interaction-highlight, red-200 5.55:1.
     --ods-file-upload-item-text-color-critical-hover: var(--ods-palette-red-200);
   }
 }

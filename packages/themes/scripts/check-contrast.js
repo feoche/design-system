@@ -33,6 +33,7 @@ const CONTRAST_PAIRS = [
   { fg: 'content-on-warning', bg: 'surface-warning-subtle', min: 4.5 },
   { fg: 'content-on-critical', bg: 'surface-critical-subtle', min: 4.5 },
   { fg: 'content-critical', bg: 'surface-raised', min: 4.5 },
+  { fg: 'content-text', bg: 'interaction-highlight', min: 4.5 },
   { fg: 'border-control', bg: 'surface-control', min: 3 },
   { fg: 'surface-brand', bg: 'surface-page', min: 3 },
   { fg: 'surface-control-solid', bg: 'surface-page', min: 3 },
