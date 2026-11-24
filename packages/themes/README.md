@@ -33,14 +33,28 @@ You'll find the value of each icon content in the `style.css` file in the icomoo
 
 ## How to update the theme values?
 
-Each theme has its own folder, `src/aluminium` and `src/blue-jeans`, independent of the other. In
-each, the palette values are in `_variables.scss`, and the semantic roles, which point at the
-palette, are in `light.scss`. `dark.scss` uses `light.scss` and only re-declares what the dark mode
-changes: a value shared by both modes, such as a radius, is set in `light.scss` only.
+The white label (`src/white-label`) holds every semantic token: each role a component reads (surfaces, content, borders, interactions, statuses and component tokens) is declared in its `light.scss` and `dark.scss`, on the palette of `_palette.scss` and `_variables.scss`. A value changed in the white label reaches every theme that does not override it.
 
-`pnpm build:prod` compiles each mode to a single stylesheet (`dist/<theme>/<mode>.css`, the two
-modes merged into one `:root` by `scripts/bake-themes.js`) and regenerates its
-`<mode>.tokens.json`. `pnpm tokens:resolve` prints what each token resolves to.
+Aluminium (`src/aluminium`) and Blue Jeans (`src/blue-jeans`) are built on it. A theme is its `_shared.scss` plus one file per mode, and each mode file holds only the deltas from the white label of that mode:
+
+- `light.scss` uses `../white-label/light`, then `_shared.scss`, then its own light deltas.
+- `dark.scss` uses `../white-label/dark`, then `_shared.scss`, then its own dark deltas.
+
+`_shared.scss` holds what both modes of a theme share: its brand and accent ramps and its component tokens. To change a value of a theme for one mode, edit that mode's file; to change it for both, edit `_shared.scss`; to change it for every theme, edit the white label.
+
+Dark deltas sit on top of `white-label/dark`, so they also inherit its dark values. To drop a white-label dark value that a theme does not want, re-declare the value the theme wants in its `dark.scss`.
+
+Some deltas resolve to the same colour as the white label, and they are kept on purpose. The published `tokens.json` keeps the alias (`refs`) of each token, the palette step the value names, such as `navy-900`. A delta that names the theme's own step keeps that alias even when the white label gives the same colour, so removing it would change the published alias without changing any rendered colour.
+
+Before a change that should not alter any build, save the current build, change the sources, then compare:
+
+1. Save the build of the current branch: `pnpm --filter @ovhcloud/ods-themes run build:prod`, then copy `packages/themes/dist` to a directory outside the repository.
+2. Change the sources and rebuild with `pnpm --filter @ovhcloud/ods-themes run build:prod`.
+3. Run `pnpm --filter @ovhcloud/ods-themes run compare:builds <saved-dist-dir>`. It prints every token that changed, went missing or was added, and exits 1 on any change that is not allowed. A refactor should print nothing.
+
+To see where each theme differs from the white label of its mode, run `pnpm --filter @ovhcloud/ods-themes run tokens:diff`. It prints each differing token as `<theme> <token>: <white-label value> → <theme value>`, grouped by theme with a count per theme. It is a report and always exits 0.
+
+`pnpm build:prod` compiles each mode to a single stylesheet (`dist/<theme>/<mode>.css`, the two modes merged into one `:root` by `scripts/bake-themes.js`) and regenerates its `<mode>.tokens.json`. `pnpm tokens:resolve` prints what each token resolves to.
 
 ## The white label theme
 
@@ -49,12 +63,12 @@ modes merged into one `:root` by `scripts/bake-themes.js`) and regenerates its
 Two choices differ from the other themes:
 
 - The `slate` family is new, added to the palette of the white label only. The accent ramp points at it.
-- The `brand` ramp re-indexes the `gray` family: `brand-500` is `gray-800` (`#333333`), and `brand-600` and `brand-700` are `gray-900`. The roles that read `brand-500` get graphite, while a theme that re-aims the brand ramp at a family with a 500 pivot keeps a sensible primary.
+- The `brand` ramp re-indexes the `gray` family: `brand-500` is `gray-800` (`#333333`), and `brand-600` and `brand-700` are `gray-900`. So the roles that read `brand-500` get graphite. A theme whose brand ramp points at a family where the 500 step is the main colour, such as blue, keeps a primary of its own colour.
 
 The contrast of the text, control and accent pairs is checked by `pnpm check:contrast`, which reads the `tokens.json` of a theme and prints the ratio of each pair:
 
 ```bash
-node scripts/check-contrast.js dist/white-label/light.tokens.json dist/white-label/dark.tokens.json
+pnpm check:contrast dist/white-label/light.tokens.json dist/white-label/dark.tokens.json
 ```
 
 It exits with 1 when a pair fails its minimum (4.5:1 for text, 3:1 for control borders and non-text) or when a token is missing.

@@ -86,7 +86,8 @@
     "generate:tokens": "node scripts/generate-token-lists.js",
     "lint:css": "node scripts/check-retired-tokens.js && node scripts/repoint-tokens.js --tables > /dev/null && node scripts/generate-base64-fonts.js --check",
     "lint:scss": "stylelint '{assets,src}/**/*.scss'",
-    "tokens:resolve": "sass src:dist --no-source-map --pkg-importer=node && node scripts/resolve-tokens.js"
+    "tokens:resolve": "sass src:dist --no-source-map --pkg-importer=node && node scripts/resolve-tokens.js",
+    "tokens:diff": "node scripts/diff-from-white-label.js"
   },
   "devDependencies": {
     "autoprefixer": "10.4.17",
