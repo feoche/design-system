@@ -106,6 +106,10 @@
   /* Interaction - structure */
   // The hover of the Tabs rail (border-track), not of the control rail (surface-track).
   --ods-semantic-color-interaction-track-hover: var(--ods-palette-navy-300);
+
+  /* Content - status inks on the page */
+  // Keeps red-300, the critical ink before the white label moved it to red-200 for the hovered row.
+  --ods-semantic-color-content-critical: var(--ods-palette-red-300);
 }
 
 /* Components */
@@ -129,5 +133,12 @@
     // surface-success and surface-critical keep their blue-jeans values: 2.76:1 and 2.13:1 on the navy-700 track.
     --ods-meter-background-color-critical: var(--ods-palette-red-300);
     --ods-meter-background-color-normal: var(--ods-palette-green-300);
+  }
+}
+
+@layer ods-organisms {
+  // The error ink of a hovered row: the white label gives red-200 (5.55:1 on interaction-highlight).
+  :root [data-ods='file-upload'] {
+    --ods-file-upload-item-text-color-critical-hover: var(--ods-palette-red-200);
   }
 }
