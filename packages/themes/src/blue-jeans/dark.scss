@@ -96,6 +96,8 @@
   /* Interaction - lists and selection */
   // Keeps the theme's own row highlight; the white label uses accent-700.
   --ods-semantic-color-interaction-highlight: var(--ods-palette-accent-600);
+  // Keeps the theme's own selected row; the white label uses accent-600.
+  --ods-semantic-color-interaction-selected-highlight: var(--ods-palette-accent-500);
 
   /* Interaction - form controls */
   --ods-semantic-color-interaction-control-solid-hover: var(--ods-palette-accent-200);
