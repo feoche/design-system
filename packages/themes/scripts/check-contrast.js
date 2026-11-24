@@ -3,12 +3,13 @@
 /*
  * Checks the WCAG contrast ratio of the semantic colour pairs a theme relies on, from the `root`
  * object of a generated tokens.json. A pair whose colours are not both 3- or 6-digit hex literals
- * (a missing token, an alpha channel, a colour function) is reported as SKIP rather than as a
- * failure, so the check never passes or fails on a value it cannot compute. A token key missing from
- * `root` is a MISSING pair and fails the check, so a renamed token cannot pass silently.
+ * (a missing token, an alpha channel, a colour function) is reported as SKIP and fails the check: a
+ * listed pair must be computable. A token key missing from `root` is a MISSING pair and fails too, so
+ * a renamed token cannot pass silently.
  *
- * Each pair is printed as `OK|KO <ratio> <fg> on <bg> (min <n>)`. Names are written without the
- * `--ods-semantic-color-` prefix. The exit code is 1 if any pair is KO or MISSING.
+ * Each pair is printed as `OK|KO <ratio> <fg> on <bg> (min <n>)`, the ratio floored (not rounded) to
+ * 2 decimals and judged on that printed value, so a KO never prints as its minimum. Names are written
+ * without the `--ods-semantic-color-` prefix. The exit code is 1 if any pair is KO, MISSING or SKIP.
  *
  * Usage: node scripts/check-contrast.js <tokens.json> [...]
  */
@@ -35,6 +36,7 @@ const CONTRAST_PAIRS = [
   { fg: 'content-critical', bg: 'surface-raised', min: 4.5 },
   { fg: 'content-text', bg: 'interaction-highlight', min: 4.5 },
   { fg: 'content-text', bg: 'interaction-selected-highlight', min: 4.5 },
+  { fg: 'content-critical', bg: 'interaction-highlight', min: 4.5 },
   { fg: 'border-control', bg: 'surface-control', min: 3 },
   { fg: 'surface-brand', bg: 'surface-page', min: 3 },
   { fg: 'surface-control-solid', bg: 'surface-page', min: 3 },
@@ -102,14 +104,16 @@ function checkFile(file) {
 
     if (!fgRgb || !bgRgb) {
       console.log(`SKIP ${fg} on ${bg} (min ${min})`);
+      failed = true;
       continue;
     }
 
-    const ratio = contrastRatio(fgRgb, bgRgb);
-    const status = ratio >= min ? 'OK' : 'KO';
+    // Floor, not round, and judge the printed value: a ratio just under the minimum never reads as it.
+    const floored = Math.floor(contrastRatio(fgRgb, bgRgb) * 100) / 100;
+    const status = floored >= min ? 'OK' : 'KO';
     failed ||= status === 'KO';
 
-    console.log(`${status} ${ratio.toFixed(2)} ${fg} on ${bg} (min ${min})`);
+    console.log(`${status} ${floored.toFixed(2)} ${fg} on ${bg} (min ${min})`);
   }
 
   return failed;
